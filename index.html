@@ -3,20 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your Links</title>
-  <meta name="description" content="All my links in one place." />
-  <link rel="canonical" href="https://yourdomain.example/" />
+  <title>Kieran · @vulkyri</title>
+  <meta name="description" content="Kieran's links — developer, creator, and builder. Find me everywhere as @vulkyri." />
+  <link rel="canonical" href="https://vulkyri.com/" />
   <meta name="theme-color" content="#0f0f0e" />
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Your Links" />
-  <meta property="og:description" content="All my links in one place." />
-  <meta property="og:url" content="https://yourdomain.example/" />
-  <meta property="og:image" content="https://yourdomain.example/og-image.png" />
+  <meta property="og:title" content="Kieran · @vulkyri" />
+  <meta property="og:description" content="Kieran's links — developer, creator, and builder. Find me everywhere as @vulkyri." />
+  <meta property="og:url" content="https://vulkyri.com/" />
+  <meta property="og:image" content="https://vulkyri.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Your Links" />
-  <meta name="twitter:description" content="All my links in one place." />
-  <meta name="twitter:image" content="https://yourdomain.example/og-image.png" />
+  <meta name="twitter:site" content="@vulkyri" />
+  <meta name="twitter:title" content="Kieran · @vulkyri" />
+  <meta name="twitter:description" content="Kieran's links — developer, creator, and builder. Find me everywhere as @vulkyri." />
+  <meta name="twitter:image" content="https://vulkyri.com/og-image.png" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
@@ -27,57 +28,68 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" aria-pressed="false">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <!-- Theme toggle: icon reflects current mode (moon = dark active, sun = light active) -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" aria-pressed="true">
+    <!-- Moon icon (shown when dark mode is active) -->
+    <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <!-- Sun icon (shown when light mode is active) -->
+    <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
   </button>
 
   <div class="copy-feedback" id="copyFeedback">Copied to clipboard!</div>
 
   <main class="page" id="main" role="main">
     <!-- ================================================================
-         PROFILE SECTION: Edit name, handle, bio, avatar
+         PROFILE SECTION
          ================================================================ -->
     <section class="profile" aria-label="Profile">
-      <!-- STATUS PILL: Shows online/offline status. Edit CONFIG.status to toggle -->
+      <!-- STATUS PILL: driven by CONFIG.status below -->
       <div id="statusPill" class="status-pill" style="display:none;">
         <span class="status-dot" id="statusDot"></span>
         <span id="statusText"></span>
       </div>
 
       <div class="avatar-ring">
-        <div class="avatar" role="img" aria-label="Profile picture">😊</div>
+        <!-- Replace emoji with <img src="/avatar.jpg" alt="Kieran"> once you have a photo -->
+        <div class="avatar" role="img" aria-label="Kieran's profile picture">🦊</div>
       </div>
       <div>
-        <h1 class="profile-name" id="profileName">Your Name</h1>
-        <p class="profile-handle" id="profileHandle">@yourhandle</p>
+        <h1 class="profile-name" id="profileName">Kieran</h1>
+        <p class="profile-handle" id="profileHandle">@vulkyri</p>
       </div>
-      <p class="profile-bio" id="profileBio">Developer · Designer · Creator. Building things on the internet.</p>
+      <p class="profile-bio" id="profileBio">Developer · Creator · Builder. Find me everywhere as @vulkyri.</p>
       <div class="socials" aria-label="Social profiles" id="socialLinks">
-        <!-- Socials will be generated from config -->
+        <!-- Socials generated from CONFIG.socials -->
       </div>
     </section>
 
     <div class="divider" role="separator"></div>
 
     <!-- ================================================================
-         LINKS SECTION: Edit CONFIG.links array to add/remove links
+         LINKS SECTION: driven by CONFIG.featuredLinks and CONFIG.links
          ================================================================ -->
-    <nav class="links" id="linksContainer" aria-label="My links">
-      <!-- Links will be generated from config -->
+    <nav class="links" id="linksContainer" aria-label="Kieran's links">
+      <!-- Links generated from config -->
     </nav>
 
     <footer class="footer" role="contentinfo">
-      <p id="footerText">© 2026 Your Name · Hosted on Cloudflare Pages</p>
+      <p id="footerText">© 2026 Kieran · vulkyri.com</p>
     </footer>
   </main>
 
+  <!-- Structured data for search engines -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "Your Name",
-      "url": "https://yourdomain.example/",
-      "sameAs": ["https://twitter.com/yourhandle","https://github.com/yourhandle"]
+      "name": "Kieran",
+      "url": "https://vulkyri.com/",
+      "sameAs": [
+        "https://twitter.com/vulkyri",
+        "https://github.com/vulkyri",
+        "https://linkedin.com/in/vulkyri",
+        "https://instagram.com/vulkyri"
+      ]
     }
   </script>
 
@@ -85,42 +97,38 @@
     /* ================================================================
      * 🎨 EDIT ME: Configuration
      * ================================================================
-     * This is your quick checklist. Just edit the CONFIG object below.
-     * Everything else is auto-generated from these settings.
+     * Edit the CONFIG object below. Everything else is auto-generated.
      */
 
     const CONFIG = {
       // Profile information
       profile: {
-        name: "Your Name",
-        handle: "@yourhandle",
-        bio: "Developer · Designer · Creator. Building things on the internet.",
-        avatar: "😊", // Can be emoji or image URL
+        name: "Kieran",
+        handle: "@vulkyri",
+        bio: "Developer · Creator · Builder. Find me everywhere as @vulkyri.",
+        avatar: "🦊", // Replace with an image URL string to use a photo, e.g. "/avatar.jpg"
         year: new Date().getFullYear(),
       },
 
-      // Status indicator (appears as a colored pill above profile)
+      // Status indicator (pill above avatar)
       // Set to null to hide, or { status: 'online'|'offline', text: 'Your text' }
-      status: { status: "online", text: "Available for projects" },
-      // status: null, // Uncomment to hide
+      status: { status: "online", text: "Open to opportunities" },
 
-      // Social links - add or remove as needed
-      // Format: { icon: 'emoji', label: 'display name', url: 'https://...' }
+      // Social links — update URLs to your real profiles
       socials: [
-        { icon: "𝕏", label: "Twitter / X", url: "https://twitter.com/yourhandle" },
-        { icon: "🐙", label: "GitHub", url: "https://github.com/yourhandle" },
-        { icon: "💼", label: "LinkedIn", url: "https://linkedin.com/in/yourhandle" },
-        { icon: "📷", label: "Instagram", url: "https://instagram.com/yourhandle" },
-        { icon: "▶️", label: "YouTube", url: "https://youtube.com/@yourhandle" },
+        { icon: "𝕏",  label: "X / Twitter",  url: "https://twitter.com/vulkyri" },
+        { icon: "🐙", label: "GitHub",        url: "https://github.com/vulkyri" },
+        { icon: "💼", label: "LinkedIn",      url: "https://linkedin.com/in/vulkyri" },
+        { icon: "📷", label: "Instagram",     url: "https://instagram.com/vulkyri" },
       ],
 
-      // Featured links (appear first with special styling)
+      // Featured links (appear first with accent styling)
       featuredLinks: [
         {
-          title: "My Latest Project",
-          description: "Check out what I've been building",
-          icon: "🏆",
-          url: "https://yourdomain.example/project",
+          title: "vulkyri.com",
+          description: "My home on the internet",
+          icon: "🌐",
+          url: "https://vulkyri.com/",
           delay: 0.05,
         },
       ],
@@ -128,211 +136,197 @@
       // Regular links
       links: [
         {
-          title: "My Portfolio",
-          description: "Work, case studies & experiments",
-          icon: "💼",
-          url: "https://yourdomain.example/portfolio",
+          title: "GitHub",
+          description: "Projects, repos & open source",
+          icon: "🐙",
+          url: "https://github.com/vulkyri",
           delay: 0.1,
-          // optional: copyable: { value: '@yourhandle', label: 'Copy username' }
+          copyable: { value: "@vulkyri", label: "Copy username" },
         },
         {
-          title: "Newsletter",
-          description: "Weekly thoughts on tech & design",
-          icon: "✉️",
-          url: "https://newsletter.example",
+          title: "X / Twitter",
+          description: "Thoughts & updates",
+          icon: "𝕏",
+          url: "https://twitter.com/vulkyri",
           delay: 0.15,
+          copyable: { value: "@vulkyri", label: "Copy handle" },
         },
         {
-          title: "WhatsApp",
-          description: "Message me on WhatsApp",
-          icon: "💬",
-          url: "https://wa.me/1234567890",
+          title: "LinkedIn",
+          description: "Professional profile",
+          icon: "💼",
+          url: "https://linkedin.com/in/vulkyri",
           delay: 0.2,
-          copyable: { value: "+1 (234) 567-8900", label: "Copy number" },
         },
         {
-          title: "Telegram",
-          description: "Connect on Telegram",
-          icon: "📱",
-          url: "https://t.me/yourhandle",
+          title: "Instagram",
+          description: "Photos & life updates",
+          icon: "📷",
+          url: "https://instagram.com/vulkyri",
           delay: 0.25,
-          copyable: { value: "@yourhandle", label: "Copy username" },
-        },
-        {
-          title: "Support My Work",
-          description: "Buy me a coffee ☕",
-          icon: "❤️",
-          url: "https://buymeacoffee.com/yourhandle",
-          delay: 0.3,
         },
       ],
     };
 
     /* ================================================================
-     * Page Initialization - No need to edit below
+     * Page Initialization — no need to edit below this line
      * ================================================================ */
 
-    function initPage() {
-      // Set profile info
-      document.getElementById("profileName").textContent = CONFIG.profile.name;
-      document.getElementById("profileHandle").textContent = CONFIG.profile.handle;
-      document.getElementById("profileBio").textContent = CONFIG.profile.bio;
-      document.getElementById("footerText").textContent = `© ${CONFIG.profile.year} ${CONFIG.profile.name} · Hosted on Cloudflare Pages`;
+    (function () {
+      function initPage() {
+        document.getElementById("profileName").textContent = CONFIG.profile.name;
+        document.getElementById("profileHandle").textContent = CONFIG.profile.handle;
+        document.getElementById("profileBio").textContent = CONFIG.profile.bio;
+        document.getElementById("footerText").textContent =
+          "\u00A9 " + CONFIG.profile.year + " " + CONFIG.profile.name + " \u00B7 vulkyri.com";
 
-      // Set status pill
-      if (CONFIG.status) {
-        const pill = document.getElementById("statusPill");
-        const dot = document.getElementById("statusDot");
-        const text = document.getElementById("statusText");
-        pill.style.display = "flex";
-        dot.className = `status-dot ${CONFIG.status.status === "offline" ? "offline" : ""}`;
-        text.textContent = CONFIG.status.text;
-      }
-
-      // Render socials
-      const socialsContainer = document.getElementById("socialLinks");
-      CONFIG.socials.forEach(social => {
-        const link = document.createElement("a");
-        link.href = social.url;
-        link.className = "social-icon";
-        link.setAttribute("aria-label", social.label);
-        link.setAttribute("target", "_blank");
-        link.setAttribute("rel", "noopener noreferrer");
-        link.textContent = social.icon;
-        socialsContainer.appendChild(link);
-      });
-
-      // Render featured links
-      const linksContainer = document.getElementById("linksContainer");
-      if (CONFIG.featuredLinks.length > 0) {
-        const featuredLabel = document.createElement("p");
-        featuredLabel.className = "section-label";
-        featuredLabel.textContent = "Featured";
-        linksContainer.appendChild(featuredLabel);
-
-        CONFIG.featuredLinks.forEach(link => {
-          linksContainer.appendChild(createLinkCard(link, true));
-        });
-      }
-
-      // Render regular links
-      if (CONFIG.links.length > 0) {
-        const linksLabel = document.createElement("p");
-        linksLabel.className = "section-label";
-        linksLabel.style.marginTop = "var(--space-2)";
-        linksLabel.textContent = "Links";
-        linksContainer.appendChild(linksLabel);
-
-        CONFIG.links.forEach(link => {
-          linksContainer.appendChild(createLinkCard(link, false));
-        });
-      }
-    }
-
-    function createLinkCard(linkData, isFeatured) {
-      const card = document.createElement("a");
-      card.href = linkData.url;
-      card.className = isFeatured ? "link-card link-card--featured" : "link-card";
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-      card.style.animationDelay = `${linkData.delay}s`;
-
-      let copyButton = "";
-      if (linkData.copyable) {
-        copyButton = `
-          <button type="button" class="copy-btn" title="${linkData.copyable.label}" aria-label="${linkData.copyable.label}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-              <path d="M15 2H9a1 1 0 0 0-1 1v2h8V3a1 1 0 0 0-1-1z"/>
-            </svg>
-          </button>
-        `;
-      }
-
-      card.innerHTML = `
-        <span class="link-icon" aria-hidden="true">${linkData.icon}</span>
-        <span class="link-text">
-          <span class="link-title">${linkData.title}</span>
-          <span class="link-desc">${linkData.description}</span>
-        </span>
-        ${copyButton}
-        <span class="link-arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </span>
-      `;
-
-      // Attach copy button handler if present
-      if (linkData.copyable) {
-        const copyBtn = card.querySelector(".copy-btn");
-        copyBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          copyToClipboard(linkData.copyable.value);
-        });
-      }
-
-      // Copy link to clipboard on middle-click or Ctrl+Click
-      card.addEventListener("mousedown", (e) => {
-        if (e.button === 1 || (e.button === 0 && (e.ctrlKey || e.metaKey))) {
-          e.preventDefault();
-          copyToClipboard(linkData.url);
+        if (CONFIG.status) {
+          const pill = document.getElementById("statusPill");
+          const dot  = document.getElementById("statusDot");
+          const txt  = document.getElementById("statusText");
+          pill.style.display = "flex";
+          dot.className = "status-dot" + (CONFIG.status.status === "offline" ? " offline" : "");
+          txt.textContent = CONFIG.status.text;
         }
-      });
 
-      return card;
-    }
+        const socialsContainer = document.getElementById("socialLinks");
+        CONFIG.socials.forEach(function (social) {
+          const a = document.createElement("a");
+          a.href = social.url;
+          a.className = "social-icon";
+          a.setAttribute("aria-label", social.label);
+          a.setAttribute("target", "_blank");
+          a.setAttribute("rel", "noopener noreferrer");
+          a.textContent = social.icon;
+          socialsContainer.appendChild(a);
+        });
 
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        const feedback = document.getElementById("copyFeedback");
-        feedback.classList.add("show");
-        setTimeout(() => feedback.classList.remove("show"), 2000);
-      }).catch(() => {
-        // Fallback for older browsers
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        const feedback = document.getElementById("copyFeedback");
-        feedback.classList.add("show");
-        setTimeout(() => feedback.classList.remove("show"), 2000);
-      });
-    }
-
-    // Theme toggle
-    function initTheme() {
-      const toggle = document.getElementById("themeToggle");
-      const root = document.documentElement;
-      const savedTheme = localStorage.getItem("site-theme") || 
-        (matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-
-      function setTheme(theme) {
-        root.setAttribute("data-theme", theme);
-        toggle.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
-        toggle.setAttribute("aria-pressed", theme === "dark");
-        try {
-          localStorage.setItem("site-theme", theme);
-        } catch (e) {
-          // Storage may be unavailable
+        const linksContainer = document.getElementById("linksContainer");
+        if (CONFIG.featuredLinks.length > 0) {
+          const fl = document.createElement("p");
+          fl.className = "section-label";
+          fl.textContent = "Featured";
+          linksContainer.appendChild(fl);
+          CONFIG.featuredLinks.forEach(function (link) {
+            linksContainer.appendChild(createLinkCard(link, true));
+          });
+        }
+        if (CONFIG.links.length > 0) {
+          const ll = document.createElement("p");
+          ll.className = "section-label";
+          ll.style.marginTop = "var(--space-2)";
+          ll.textContent = "Links";
+          linksContainer.appendChild(ll);
+          CONFIG.links.forEach(function (link) {
+            linksContainer.appendChild(createLinkCard(link, false));
+          });
         }
       }
 
-      setTheme(savedTheme);
-      toggle.addEventListener("click", () => {
-        const currentTheme = root.getAttribute("data-theme");
-        setTheme(currentTheme === "dark" ? "light" : "dark");
-      });
-    }
+      function createLinkCard(linkData, isFeatured) {
+        const card = document.createElement("a");
+        card.href = linkData.url;
+        card.className = isFeatured ? "link-card link-card--featured" : "link-card";
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+        card.style.animationDelay = linkData.delay + "s";
 
-    // Initialize on page load
-    document.addEventListener("DOMContentLoaded", () => {
-      initPage();
-      initTheme();
-    });
+        let copyBtn = "";
+        if (linkData.copyable) {
+          copyBtn = "<button type=\"button\" class=\"copy-btn\" title=\"" + linkData.copyable.label
+            + "\" aria-label=\"" + linkData.copyable.label + "\">";
+          copyBtn += "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">";
+          copyBtn += "<path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\"/>";
+          copyBtn += "<path d=\"M15 2H9a1 1 0 0 0-1 1v2h8V3a1 1 0 0 0-1-1z\"/></svg></button>";
+        }
+
+        card.innerHTML =
+          "<span class=\"link-icon\" aria-hidden=\"true\">" + linkData.icon + "</span>" +
+          "<span class=\"link-text\">" +
+            "<span class=\"link-title\">" + linkData.title + "</span>" +
+            "<span class=\"link-desc\">" + linkData.description + "</span>" +
+          "</span>" +
+          copyBtn +
+          "<span class=\"link-arrow\" aria-hidden=\"true\">" +
+          "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">" +
+          "<path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></span>";
+
+        if (linkData.copyable) {
+          const btn = card.querySelector(".copy-btn");
+          btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            copyToClipboard(linkData.copyable.value);
+          });
+        }
+
+        card.addEventListener("mousedown", function (e) {
+          if (e.button === 1 || (e.button === 0 && (e.ctrlKey || e.metaKey))) {
+            e.preventDefault();
+            copyToClipboard(linkData.url);
+          }
+        });
+
+        return card;
+      }
+
+      function copyToClipboard(text) {
+        var feedback = document.getElementById("copyFeedback");
+        function showFeedback() {
+          feedback.classList.add("show");
+          setTimeout(function () { feedback.classList.remove("show"); }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showFeedback).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+        function fallbackCopy() {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          try { document.execCommand("copy"); } catch (e) {}
+          document.body.removeChild(ta);
+          showFeedback();
+        }
+      }
+
+      // Theme toggle — swaps moon/sun icon to match actual theme state
+      function initTheme() {
+        var toggle  = document.getElementById("themeToggle");
+        var root    = document.documentElement;
+        var moon    = document.getElementById("iconMoon");
+        var sun     = document.getElementById("iconSun");
+        var saved   = null;
+        try { saved = localStorage.getItem("site-theme"); } catch (e) {}
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = saved || (prefersDark ? "dark" : "light");
+
+        function applyTheme(t) {
+          root.setAttribute("data-theme", t);
+          var isDark = t === "dark";
+          toggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+          toggle.setAttribute("aria-pressed", String(isDark));
+          moon.style.display = isDark ? "" : "none";
+          sun.style.display  = isDark ? "none" : "";
+          try { localStorage.setItem("site-theme", t); } catch (e) {}
+        }
+
+        applyTheme(theme);
+        toggle.addEventListener("click", function () {
+          applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        initPage();
+        initTheme();
+      });
+    })();
   </script>
 </body>
 </html>
