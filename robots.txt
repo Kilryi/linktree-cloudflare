@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /go/
+
+Sitemap: https://vulkyri.com/sitemap.xml

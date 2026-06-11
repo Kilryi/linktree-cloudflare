@@ -2,14 +2,27 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "vulkyri",
   "compatibility_date": "2026-06-11",
-  "observability": {
-    "enabled": true
-  },
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  // Static assets — Cloudflare Pages serves index.html for unmatched routes
   "assets": {
     "directory": ".",
     "not_found_handling": "single-page-application"
   },
-  "compatibility_flags": [
-    "nodejs_compat"
+
+  // Workers AI binding — exposes env.AI in all Pages Functions
+  "ai": {
+    "binding": "AI"
+  },
+
+  // KV namespace — store config, click counts, status updates
+  // Create with: npx wrangler kv namespace create VULKYRI_KV
+  // Then replace the placeholder id below with the returned id
+  "kv_namespaces": [
+    {
+      "binding": "VULKYRI_KV",
+      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+    }
   ]
 }

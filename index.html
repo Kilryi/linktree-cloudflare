@@ -7,6 +7,12 @@
   <meta name="description" content="Kieran's links — developer, creator, and builder. Find me everywhere as @vulkyri." />
   <link rel="canonical" href="https://vulkyri.com/" />
   <meta name="theme-color" content="#0f0f0e" id="metaThemeColor" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <!-- PWA / manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Vulkyri" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Kieran · @vulkyri" />
@@ -24,7 +30,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <!-- Fonts: preconnect first, then stylesheet -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" />
   <style>
@@ -44,34 +50,22 @@
       --color-primary:         #0066ff;
       --color-primary-light:   #e6f0ff;
       --meta-theme:            #f7f6f2;
-
-      --font-body: 'Satoshi', system-ui, -apple-system, 'Segoe UI', Roboto,
-                   'Helvetica Neue', Arial, sans-serif;
-
-      --text-xs:   0.75rem;   /* 12px */
-      --text-sm:   0.875rem;  /* 14px */
-      --text-base: 1rem;      /* 16px */
-      --text-lg:   1.125rem;  /* 18px */
-
-      --space-1: 0.25rem;
-      --space-2: 0.5rem;
-      --space-3: 0.75rem;
-      --space-4: 1rem;
-      --space-5: 1.25rem;
-      --space-6: 1.5rem;
+      --font-body: 'Satoshi', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --text-xs:   0.75rem;
+      --text-sm:   0.875rem;
+      --text-base: 1rem;
+      --text-lg:   1.125rem;
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
       --space-8: 2rem;
-
       --radius-sm:   6px;
       --radius-lg:   12px;
       --radius-full: 9999px;
-
       --shadow-sm: 0 2px 8px  rgba(0,0,0,0.04);
       --shadow-md: 0 6px 18px rgba(0,0,0,0.08);
       --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
-
       --transition: 150ms cubic-bezier(0.16,1,0.3,1);
     }
-
     [data-theme="dark"] {
       --color-bg:              #0f0f0e;
       --color-surface:         #1a1918;
@@ -89,18 +83,8 @@
     /* ============================================================
        RESET & BASE
        ============================================================ */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
     body {
       min-height: 100dvh;
       font-family: var(--font-body);
@@ -111,440 +95,239 @@
       flex-direction: column;
       align-items: center;
       padding: var(--space-4);
-      /* Prevent layout shift from scrollbar appearing/disappearing */
       overflow-y: scroll;
     }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    button, a {
-      cursor: pointer;
-      font: inherit;
-      color: inherit;
-    }
-
+    img { display: block; max-width: 100%; }
+    button, a { cursor: pointer; font: inherit; color: inherit; }
     a { text-decoration: none; }
-
-    :focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 3px;
-      border-radius: var(--radius-sm);
-    }
-
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
     /* ============================================================
-       SKIP LINK (accessibility)
+       SKIP LINK
        ============================================================ */
-    .skip-link {
-      position: absolute;
-      left: -999px;
-      top: auto;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-    }
+    .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
     .skip-link:focus {
-      left: var(--space-4);
-      top: var(--space-4);
-      width: auto;
-      height: auto;
-      padding: var(--space-2) var(--space-3);
-      background: #000;
-      color: #fff;
-      z-index: 1000;
-      border-radius: var(--radius-sm);
-      font-size: var(--text-sm);
+      left: var(--space-4); top: var(--space-4); width: auto; height: auto;
+      padding: var(--space-2) var(--space-3); background: #000; color: #fff;
+      z-index: 1000; border-radius: var(--radius-sm); font-size: var(--text-sm);
     }
 
     /* ============================================================
        THEME TOGGLE
        ============================================================ */
     .theme-toggle {
-      position: fixed;
-      top: var(--space-4);
-      right: var(--space-4);
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-lg);
+      position: fixed; top: var(--space-4); right: var(--space-4);
+      width: 40px; height: 40px; border-radius: var(--radius-lg);
       background: var(--color-surface);
       border: 1px solid color-mix(in oklch, var(--color-text) 10%, transparent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-text-muted);
-      transition: all var(--transition);
-      cursor: pointer;
-      z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-muted); transition: all var(--transition);
+      cursor: pointer; z-index: 100;
     }
-    .theme-toggle:hover {
-      color: var(--color-text);
-      background: var(--color-surface-2);
-      box-shadow: var(--shadow-md);
-    }
+    .theme-toggle:hover { color: var(--color-text); background: var(--color-surface-2); box-shadow: var(--shadow-md); }
     .theme-toggle:active { transform: scale(0.95); }
 
     /* ============================================================
        PAGE LAYOUT
        ============================================================ */
-    .page {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-6);
-    }
+    .page { width: 100%; max-width: 520px; display: flex; flex-direction: column; align-items: center; gap: var(--space-6); }
 
     /* ============================================================
        PROFILE
        ============================================================ */
-    .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-3);
-      padding-top: var(--space-8);
-      text-align: center;
-    }
-
-    /* Status pill */
+    .profile { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding-top: var(--space-8); text-align: center; }
     .status-pill {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
+      display: flex; align-items: center; gap: var(--space-2);
       padding: var(--space-2) var(--space-3);
       background: color-mix(in oklch, var(--color-primary) 8%, transparent);
       border: 1px solid color-mix(in oklch, var(--color-primary) 20%, transparent);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      color: var(--color-primary);
+      border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; color: var(--color-primary);
       margin-bottom: var(--space-1);
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      min-width: 8px;
-      border-radius: var(--radius-full);
-      background: currentColor;
-      animation: pulse 2s infinite;
-    }
-    .status-dot.offline {
-      opacity: 0.5;
-      animation: none;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.6; }
-    }
-
-    /* Avatar */
+    .status-dot { width: 8px; height: 8px; min-width: 8px; border-radius: var(--radius-full); background: currentColor; animation: pulse 2s infinite; }
+    .status-dot.offline { opacity: 0.5; animation: none; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
     .avatar-ring {
-      width: 88px;
-      height: 88px;
-      border-radius: var(--radius-full);
-      padding: 3px;
+      width: 88px; height: 88px; border-radius: var(--radius-full); padding: 3px;
       background: linear-gradient(135deg in oklch, var(--color-primary), oklch(0.6 0.15 220));
-      box-shadow: var(--shadow-md);
-      /* Prevent avatar from being squished on narrow screens */
-      flex-shrink: 0;
+      box-shadow: var(--shadow-md); flex-shrink: 0;
+      animation: ring-spin 6s linear infinite;
+    }
+    @keyframes ring-spin {
+      from { background: linear-gradient(0deg in oklch, var(--color-primary), oklch(0.6 0.15 220)); }
+      to   { background: linear-gradient(360deg in oklch, var(--color-primary), oklch(0.6 0.15 220)); }
     }
     .avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: var(--radius-full);
-      background: var(--color-surface-offset);
-      object-fit: cover;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
+      width: 100%; height: 100%; border-radius: var(--radius-full);
+      background: var(--color-surface-offset); object-fit: cover; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
     }
-
-    /* Profile text */
-    .profile-name {
-      font-size: var(--text-lg);
-      font-weight: 700;
-      color: var(--color-text);
-      letter-spacing: -0.02em;
-    }
-    .profile-handle {
-      font-size: var(--text-sm);
-      color: var(--color-primary);
-      font-weight: 500;
-    }
-    .profile-bio {
-      font-size: var(--text-sm);
-      color: var(--color-text-muted);
-      max-width: 36ch;
-      line-height: 1.6;
-    }
+    .profile-name { font-size: var(--text-lg); font-weight: 700; color: var(--color-text); letter-spacing: -0.02em; }
+    .profile-handle { font-size: var(--text-sm); color: var(--color-primary); font-weight: 500; }
+    .profile-bio { font-size: var(--text-sm); color: var(--color-text-muted); max-width: 36ch; line-height: 1.6; }
 
     /* ============================================================
        SOCIAL ICONS
        ============================================================ */
-    .socials {
-      display: flex;
-      gap: var(--space-3);
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    .socials { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; justify-content: center; }
     .social-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 36px; height: 36px; border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
       color: var(--color-text-muted);
       border: 1px solid color-mix(in oklch, var(--color-text) 8%, transparent);
-      transition: all var(--transition);
-      background: transparent;
+      transition: all var(--transition); background: transparent;
     }
-    .social-icon:hover {
-      color: var(--color-text);
-      background: var(--color-surface);
-      border-color: color-mix(in oklch, var(--color-text) 20%, transparent);
-      transform: translateY(-2px);
-    }
+    .social-icon:hover { color: var(--color-text); background: var(--color-surface); border-color: color-mix(in oklch, var(--color-text) 20%, transparent); transform: translateY(-2px); }
     .social-icon svg { width: 16px; height: 16px; }
 
     /* ============================================================
        DIVIDER
        ============================================================ */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: color-mix(in oklch, var(--color-text) 8%, transparent);
-    }
+    .divider { width: 100%; height: 1px; background: color-mix(in oklch, var(--color-text) 8%, transparent); }
 
     /* ============================================================
        SECTION LABELS
        ============================================================ */
     .section-label {
-      width: 100%;
-      font-size: var(--text-xs);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-text-faint);
-      padding-left: var(--space-1);
+      width: 100%; font-size: var(--text-xs); font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-text-faint); padding-left: var(--space-1);
       margin-bottom: calc(-1 * var(--space-2));
     }
 
     /* ============================================================
        LINK CARDS
        ============================================================ */
-    .links {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-
+    .links { width: 100%; display: flex; flex-direction: column; gap: var(--space-3); }
     .link-card {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
+      position: relative; display: flex; align-items: center; gap: var(--space-4);
       padding: var(--space-4) var(--space-5);
       background: var(--color-surface);
       border: 1px solid color-mix(in oklch, var(--color-text) 8%, transparent);
-      border-radius: var(--radius-lg);
-      transition: all var(--transition);
-      overflow: hidden;
-      /* Use <a> tag for navigation — no JS navigation fallback needed */
-      text-decoration: none;
+      border-radius: var(--radius-lg); transition: all var(--transition);
+      overflow: hidden; text-decoration: none;
     }
-
-    /* Ripple overlay */
     .link-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
+      content: ''; position: absolute; inset: 0; opacity: 0;
       background: color-mix(in oklch, var(--color-primary) 5%, transparent);
-      transition: opacity var(--transition);
-      pointer-events: none;
+      transition: opacity var(--transition); pointer-events: none;
     }
-
-    .link-card:hover {
-      background: var(--color-surface-2);
-      border-color: color-mix(in oklch, var(--color-text) 14%, transparent);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-1px);
-    }
-    .link-card:active {
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
-    }
+    .link-card:hover { background: var(--color-surface-2); border-color: color-mix(in oklch, var(--color-text) 14%, transparent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .link-card:active { transform: translateY(0); box-shadow: var(--shadow-sm); }
     .link-card:hover::before { opacity: 1; }
-
-    /* Featured variant */
-    .link-card--featured {
-      border-color: color-mix(in oklch, var(--color-primary) 30%, transparent);
-      background: color-mix(in oklch, var(--color-primary) 4%, var(--color-surface));
-    }
-    .link-card--featured .link-icon {
-      background: var(--color-primary);
-      color: #fff;
-    }
-
-    /* Icon box */
+    .link-card--featured { border-color: color-mix(in oklch, var(--color-primary) 30%, transparent); background: color-mix(in oklch, var(--color-primary) 4%, var(--color-surface)); }
+    .link-card--featured .link-icon { background: var(--color-primary); color: #fff; }
     .link-icon {
-      position: relative;
-      z-index: 1;
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-      border-radius: var(--radius-lg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      background: color-mix(in oklch, var(--color-primary) 10%, transparent);
-      color: var(--color-primary);
-      flex-shrink: 0;
+      position: relative; z-index: 1; width: 40px; height: 40px; min-width: 40px;
+      border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; background: color-mix(in oklch, var(--color-primary) 10%, transparent);
+      color: var(--color-primary); flex-shrink: 0;
     }
     .link-icon svg { width: 20px; height: 20px; }
-
-    /* Text */
-    .link-text {
-      flex: 1;
-      min-width: 0;
-      position: relative;
-      z-index: 1;
-      text-align: left;
+    .link-text { flex: 1; min-width: 0; position: relative; z-index: 1; text-align: left; }
+    .link-title { font-size: var(--text-sm); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; color: var(--color-text); }
+    .link-desc { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+    .link-badge {
+      position: relative; z-index: 1;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: var(--radius-full);
+      background: color-mix(in oklch, var(--color-primary) 15%, transparent);
+      color: var(--color-primary); border: 1px solid color-mix(in oklch, var(--color-primary) 25%, transparent);
+      white-space: nowrap; flex-shrink: 0;
     }
-    .link-title {
-      font-size: var(--text-sm);
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: block;
-      color: var(--color-text);
-    }
-    .link-desc {
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: block;
-    }
-
-    /* Arrow */
     .link-arrow {
-      position: relative;
-      z-index: 1;
-      color: var(--color-text-faint);
+      position: relative; z-index: 1; color: var(--color-text-faint);
       transition: color var(--transition), transform var(--transition);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
+      flex-shrink: 0; display: flex; align-items: center;
     }
-    .link-card:hover .link-arrow {
-      color: var(--color-primary);
-      transform: translateX(3px);
-    }
+    .link-card:hover .link-arrow { color: var(--color-primary); transform: translateX(3px); }
     .link-arrow svg { width: 16px; height: 16px; }
-
-    /* Copy button */
     .copy-btn {
-      position: relative;
-      z-index: 2;
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
+      position: relative; z-index: 2; width: 32px; height: 32px; min-width: 32px;
       border-radius: var(--radius-sm);
       background: color-mix(in oklch, var(--color-text) 8%, transparent);
       border: 1px solid color-mix(in oklch, var(--color-text) 12%, transparent);
-      color: var(--color-text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--transition);
-      cursor: pointer;
-      flex-shrink: 0;
+      color: var(--color-text-muted); display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition); cursor: pointer; flex-shrink: 0;
     }
-    .copy-btn:hover {
-      background: color-mix(in oklch, var(--color-text) 12%, transparent);
-      color: var(--color-text);
-      border-color: color-mix(in oklch, var(--color-text) 20%, transparent);
-    }
+    .copy-btn:hover { background: color-mix(in oklch, var(--color-text) 12%, transparent); color: var(--color-text); border-color: color-mix(in oklch, var(--color-text) 20%, transparent); }
     .copy-btn:active { transform: scale(0.9); }
     .copy-btn svg { width: 14px; height: 14px; }
-    /* Checkmark shown after copy */
     .copy-btn.copied { color: #22c55e; border-color: #22c55e; }
 
     /* ============================================================
        FOOTER
        ============================================================ */
-    .footer {
-      margin-top: var(--space-4);
-      padding-bottom: var(--space-6);
-      font-size: var(--text-xs);
-      color: var(--color-text-faint);
-      text-align: center;
-    }
+    .footer { margin-top: var(--space-4); padding-bottom: var(--space-6); font-size: var(--text-xs); color: var(--color-text-faint); text-align: center; }
+    .footer-discretion { margin-top: var(--space-2); font-size: 0.7rem; color: var(--color-text-faint); opacity: 0.7; }
 
     /* ============================================================
-       TOAST NOTIFICATION
+       TOAST
        ============================================================ */
     .copy-feedback {
-      position: fixed;
-      bottom: var(--space-6);
-      left: 50%;
+      position: fixed; bottom: var(--space-6); left: 50%;
       transform: translateX(-50%) translateY(8px);
       padding: var(--space-3) var(--space-4);
-      background: var(--color-text);
-      color: var(--color-bg);
+      background: var(--color-text); color: var(--color-bg);
+      border-radius: var(--radius-lg); font-size: var(--text-sm); font-weight: 500;
+      opacity: 0; transition: opacity 250ms ease, transform 250ms ease;
+      pointer-events: none; z-index: 999; white-space: nowrap; box-shadow: var(--shadow-lg);
+    }
+    .copy-feedback.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============================================================
+       AGE GATE
+       ============================================================ */
+    .age-gate {
+      position: fixed; inset: 0; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--space-4);
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .age-gate[hidden] { display: none !important; }
+    .age-gate__card {
+      width: 100%; max-width: 400px;
+      background: var(--color-surface);
+      border: 1px solid color-mix(in oklch, var(--color-text) 10%, transparent);
+      border-radius: 20px; box-shadow: var(--shadow-lg);
+      padding: var(--space-6); text-align: center;
+    }
+    .age-gate__eyebrow {
+      font-size: var(--text-xs); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-primary); margin-bottom: var(--space-3);
+    }
+    .age-gate__title { font-size: 1.4rem; font-weight: 700; color: var(--color-text); margin-bottom: var(--space-3); }
+    .age-gate__text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+    .age-gate__actions { display: flex; gap: var(--space-3); justify-content: center; margin-top: var(--space-5); flex-wrap: wrap; }
+    .age-gate__btn {
+      min-width: 130px; padding: 0.75rem 1.25rem;
       border-radius: var(--radius-lg);
-      font-size: var(--text-sm);
-      font-weight: 500;
-      opacity: 0;
-      transition: opacity 250ms ease, transform 250ms ease;
-      pointer-events: none;
-      z-index: 999;
-      white-space: nowrap;
-      box-shadow: var(--shadow-lg);
+      font-size: var(--text-sm); font-weight: 600;
+      border: 1px solid transparent; text-decoration: none;
+      transition: all var(--transition);
     }
-    .copy-feedback.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .age-gate__btn--primary { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    .age-gate__btn--primary:hover { filter: brightness(1.1); }
+    .age-gate__btn--secondary { background: transparent; color: var(--color-text-muted); border-color: color-mix(in oklch, var(--color-text) 15%, transparent); }
+    .age-gate__btn--secondary:hover { background: var(--color-surface-2); color: var(--color-text); }
 
     /* ============================================================
        ENTRANCE ANIMATIONS
        ============================================================ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* JS applies animation-delay per card via data-attr */
-    .animate-in {
-      animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-in { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
 
     /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 480px) {
-      body { padding: var(--space-3) var(--space-3); }
+      body { padding: var(--space-3); }
       .theme-toggle { top: var(--space-3); right: var(--space-3); }
       .link-card { padding: var(--space-3) var(--space-4); gap: var(--space-3); }
     }
@@ -556,23 +339,38 @@
   <!-- Theme toggle -->
   <button class="theme-toggle" id="themeToggle" type="button"
           aria-label="Switch to light mode" aria-pressed="true">
-    <!-- Moon = dark mode active -->
-    <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
-    <!-- Sun = light mode active -->
-    <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
+    <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
       <circle cx="12" cy="12" r="5"/>
-      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42
-               M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
     </svg>
   </button>
 
+  <!-- Age Gate -->
+  <div class="age-gate" id="ageGate" hidden
+       role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+    <div class="age-gate__card">
+      <p class="age-gate__eyebrow">18+ only</p>
+      <h2 class="age-gate__title" id="ageGateTitle">Adults only</h2>
+      <p class="age-gate__text">
+        This page links to adult-oriented creator content. By entering you confirm
+        you are 18 or older and legally permitted to view such material in your jurisdiction.
+      </p>
+      <div class="age-gate__actions">
+        <button type="button" class="age-gate__btn age-gate__btn--primary" id="ageConfirm">
+          I am 18+, enter
+        </button>
+        <a class="age-gate__btn age-gate__btn--secondary" href="https://www.google.com/">
+          Leave
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast -->
-  <div class="copy-feedback" id="copyFeedback" role="status" aria-live="polite"
-       aria-atomic="true">Copied!</div>
+  <div class="copy-feedback" id="copyFeedback" role="status" aria-live="polite" aria-atomic="true">Copied!</div>
 
   <main class="page" id="main" role="main">
 
@@ -582,17 +380,14 @@
         <span class="status-dot" id="statusDot"></span>
         <span id="statusText"></span>
       </div>
-
       <div class="avatar-ring">
         <div class="avatar" id="avatarEl" role="img" aria-label="Kieran's profile picture">🦊</div>
       </div>
-
       <div>
         <h1 class="profile-name" id="profileName">Kieran</h1>
         <p class="profile-handle" id="profileHandle">@vulkyri</p>
       </div>
       <p class="profile-bio" id="profileBio">Developer · Creator · Builder. Find me everywhere as @vulkyri.</p>
-
       <nav class="socials" aria-label="Social profiles" id="socialLinks"></nav>
     </section>
 
@@ -603,6 +398,7 @@
 
     <footer class="footer" role="contentinfo">
       <p id="footerText"></p>
+      <p class="footer-discretion">Discreet &amp; confidential. All linked platforms are 18+ only.</p>
     </footer>
   </main>
 
@@ -623,343 +419,366 @@
   </script>
 
   <script>
-    /* ================================================================
-     * CONFIG — edit this block only
-     * ================================================================ */
-    const CONFIG = {
-      profile: {
-        name:   "Kieran",
-        handle: "@vulkyri",
-        bio:    "Developer · Creator · Builder. Find me everywhere as @vulkyri.",
-        // avatar: string → emoji, or URL string like "/avatar.jpg"
-        avatar: "🦊",
-        year:   new Date().getFullYear(),
-      },
-
-      // null to hide; or { status: 'online'|'offline', text: 'string' }
-      status: { status: "online", text: "Open to opportunities" },
-
-      socials: [
-        {
-          label: "X / Twitter",
-          url:   "https://twitter.com/vulkyri",
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
-        },
-        {
-          label: "GitHub",
-          url:   "https://github.com/vulkyri",
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>'
-        },
-        {
-          label: "LinkedIn",
-          url:   "https://linkedin.com/in/vulkyri",
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
-        },
-        {
-          label: "Instagram",
-          url:   "https://instagram.com/vulkyri",
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>'
-        },
-      ],
-
-      featuredLinks: [
-        {
-          title:       "vulkyri.com",
-          description: "My home on the internet",
-          icon:        "🌐",
-          url:         "https://vulkyri.com/",
-          delay:       0.05,
-        },
-      ],
-
-      links: [
-        {
-          title:       "GitHub",
-          description: "Projects, repos & open source",
-          icon:        "gh",  // special: renders the GitHub SVG icon
-          url:         "https://github.com/vulkyri",
-          delay:       0.1,
-          copyable:    { value: "vulkyri", label: "Copy username" },
-        },
-        {
-          title:       "X / Twitter",
-          description: "Thoughts & updates",
-          icon:        "x",   // special: renders the X SVG icon
-          url:         "https://twitter.com/vulkyri",
-          delay:       0.15,
-          copyable:    { value: "@vulkyri", label: "Copy handle" },
-        },
-        {
-          title:       "LinkedIn",
-          description: "Professional profile",
-          icon:        "li",  // special: renders the LinkedIn SVG icon
-          url:         "https://linkedin.com/in/vulkyri",
-          delay:       0.2,
-        },
-        {
-          title:       "Instagram",
-          description: "Photos & life updates",
-          icon:        "ig",  // special: renders the Instagram SVG icon
-          url:         "https://instagram.com/vulkyri",
-          delay:       0.25,
-        },
-      ],
-    };
-
-    /* ================================================================
-     * ICON LIBRARY — SVG paths for branded icons
-     * ================================================================ */
-    const ICONS = {
-      x: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-      gh: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>',
-      li: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>',
-      ig: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>',
-      copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
-      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
-      arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
-    };
-
-    /* ================================================================
-     * PAGE INIT
-     * ================================================================ */
     (function () {
+      'use strict';
 
-      /* ---------- Theme: apply before paint to avoid flash ---------- */
+      /* ================================================================
+       * CONFIG — edit this block only
+       * ================================================================ */
+      var CONFIG = {
+        profile: {
+          name:   'Kieran',
+          handle: '@vulkyri',
+          bio:    'Developer · Creator · Builder. Find me everywhere as @vulkyri.',
+          avatar: '🦊',
+          year:   new Date().getFullYear()
+        },
+
+        status: { status: 'online', text: 'Open to opportunities' },
+
+        socials: [
+          {
+            label: 'X / Twitter',
+            url:   'https://vulkyri.com/go/x',
+            svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+          },
+          {
+            label: 'GitHub',
+            url:   'https://vulkyri.com/go/github',
+            svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>'
+          },
+          {
+            label: 'LinkedIn',
+            url:   'https://vulkyri.com/go/linkedin',
+            svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
+          },
+          {
+            label: 'Instagram',
+            url:   'https://vulkyri.com/go/instagram',
+            svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>'
+          }
+        ],
+
+        featuredLinks: [
+          {
+            title:       'Book / Enquire',
+            description: 'Send a private, discreet enquiry',
+            icon:        '📩',
+            url:         'mailto:hello@vulkyri.com',
+            badge:       'Bookings open',
+            delay:       0.05
+          }
+        ],
+
+        links: [
+          {
+            title:       'GitHub',
+            description: 'Projects, repos & open source',
+            icon:        'gh',
+            url:         'https://vulkyri.com/go/github',
+            delay:       0.1,
+            copyable:    { value: 'vulkyri', label: 'Copy username' }
+          },
+          {
+            title:       'X / Twitter',
+            description: 'Thoughts & updates',
+            icon:        'x',
+            url:         'https://vulkyri.com/go/x',
+            delay:       0.15
+          },
+          {
+            title:       'LinkedIn',
+            description: 'Professional profile',
+            icon:        '💼',
+            url:         'https://vulkyri.com/go/linkedin',
+            delay:       0.2
+          },
+          {
+            title:       'Instagram',
+            description: 'Photos & life updates',
+            icon:        '📸',
+            url:         'https://vulkyri.com/go/instagram',
+            delay:       0.25
+          }
+        ]
+      };
+
+      /* ================================================================
+       * ICONS
+       * ================================================================ */
+      var ICONS = {
+        copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+        check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+        arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
+        github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>',
+        x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+      };
+
+      /* ================================================================
+       * THEME
+       * ================================================================ */
       function initTheme() {
-        var toggle     = document.getElementById('themeToggle');
-        var root       = document.documentElement;
-        var moon       = document.getElementById('iconMoon');
-        var sun        = document.getElementById('iconSun');
-        var metaColor  = document.getElementById('metaThemeColor');
-        var saved;
-        try { saved = localStorage.getItem('site-theme'); } catch (e) {}
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (_) {}
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         var theme = saved || (prefersDark ? 'dark' : 'light');
-
-        function applyTheme(t) {
-          root.setAttribute('data-theme', t);
-          var isDark = (t === 'dark');
-          toggle.setAttribute('aria-label',   isDark ? 'Switch to light mode' : 'Switch to dark mode');
-          toggle.setAttribute('aria-pressed', String(isDark));
-          moon.style.display = isDark ? '' : 'none';
-          sun.style.display  = isDark ? 'none' : '';
-          // Update meta theme-color dynamically
-          if (metaColor) metaColor.setAttribute('content', isDark ? '#0f0f0e' : '#f7f6f2');
-          try { localStorage.setItem('site-theme', t); } catch (e) {}
-        }
-
         applyTheme(theme);
-        toggle.addEventListener('click', function () {
-          applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        });
+      }
 
-        // Sync when OS preference changes (e.g., auto dark mode at sunset)
-        if (window.matchMedia) {
-          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-            var savedNow;
-            try { savedNow = localStorage.getItem('site-theme'); } catch (ex) {}
-            if (!savedNow) applyTheme(e.matches ? 'dark' : 'light');
-          });
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        var toggle = document.getElementById('themeToggle');
+        var moon   = document.getElementById('iconMoon');
+        var sun    = document.getElementById('iconSun');
+        var meta   = document.getElementById('metaThemeColor');
+        if (!toggle) return;
+        if (theme === 'dark') {
+          moon.style.display = ''; sun.style.display = 'none';
+          toggle.setAttribute('aria-label', 'Switch to light mode');
+          toggle.setAttribute('aria-pressed', 'true');
+          if (meta) meta.setAttribute('content', '#0f0f0e');
+        } else {
+          moon.style.display = 'none'; sun.style.display = '';
+          toggle.setAttribute('aria-label', 'Switch to dark mode');
+          toggle.setAttribute('aria-pressed', 'false');
+          if (meta) meta.setAttribute('content', '#f7f6f2');
         }
       }
 
-      /* ---------- Render avatar ---------- */
+      document.addEventListener('DOMContentLoaded', function () {
+        var toggle = document.getElementById('themeToggle');
+        if (toggle) {
+          toggle.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme');
+            var next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            try { localStorage.setItem('theme', next); } catch (_) {}
+          });
+        }
+      });
+
+      /* ================================================================
+       * AGE GATE
+       * ================================================================ */
+      function initAgeGate() {
+        var gate    = document.getElementById('ageGate');
+        var confirm = document.getElementById('ageConfirm');
+        if (!gate || !confirm) return;
+
+        var confirmed = false;
+        try { confirmed = localStorage.getItem('age-confirmed') === '1'; } catch (_) {}
+
+        if (!confirmed) {
+          gate.hidden = false;
+          document.body.style.overflow = 'hidden';
+          // Focus confirm button for keyboard users
+          setTimeout(function () { confirm.focus(); }, 50);
+        }
+
+        confirm.addEventListener('click', function () {
+          try { localStorage.setItem('age-confirmed', '1'); } catch (_) {}
+          gate.hidden = true;
+          document.body.style.overflow = '';
+        });
+
+        // ESC key closes (treats as Leave)
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && !gate.hidden) {
+            window.location.href = 'https://www.google.com/';
+          }
+        });
+      }
+
+      /* ================================================================
+       * PROFILE
+       * ================================================================ */
       function renderAvatar() {
-        var av = CONFIG.profile.avatar;
         var el = document.getElementById('avatarEl');
         if (!el) return;
-        // If it looks like a URL, render as <img>
-        if (typeof av === 'string' && (av.startsWith('/') || av.startsWith('http'))) {
+        var av = CONFIG.profile.avatar;
+        if (typeof av === 'string' && (av.startsWith('http') || av.startsWith('/'))) {
           var img = document.createElement('img');
-          img.src = av;
-          img.alt = CONFIG.profile.name;
-          img.width = 82;
-          img.height = 82;
-          img.style.borderRadius = '50%';
-          img.style.objectFit = 'cover';
-          el.innerHTML = '';
-          el.appendChild(img);
-          el.removeAttribute('role');
+          img.src = av; img.alt = CONFIG.profile.name + "'s profile picture";
+          img.style.cssText = 'width:100%;height:100%;border-radius:9999px;object-fit:cover';
+          el.textContent = ''; el.appendChild(img);
         } else {
           el.textContent = av;
         }
       }
 
-      /* ---------- Build profile ---------- */
       function initProfile() {
-        document.getElementById('profileName').textContent   = CONFIG.profile.name;
-        document.getElementById('profileHandle').textContent = CONFIG.profile.handle;
-        document.getElementById('profileBio').textContent    = CONFIG.profile.bio;
-        document.getElementById('footerText').textContent    =
-          '\u00A9 ' + CONFIG.profile.year + ' ' + CONFIG.profile.name + ' \u00B7 vulkyri.com';
+        var p = CONFIG.profile;
+        var nameEl   = document.getElementById('profileName');
+        var handleEl = document.getElementById('profileHandle');
+        var bioEl    = document.getElementById('profileBio');
+        var footerEl = document.getElementById('footerText');
+        if (nameEl)   nameEl.textContent   = p.name;
+        if (handleEl) handleEl.textContent = p.handle;
+        if (bioEl)    bioEl.textContent    = p.bio;
+        if (footerEl) footerEl.textContent = '\u00A9 ' + p.year + ' ' + p.name + ' · vulkyri.com';
 
         // Status pill
         if (CONFIG.status) {
           var pill = document.getElementById('statusPill');
           var dot  = document.getElementById('statusDot');
           var txt  = document.getElementById('statusText');
-          pill.style.display = 'flex';
-          dot.className = 'status-dot' + (CONFIG.status.status === 'offline' ? ' offline' : '');
-          txt.textContent = CONFIG.status.text;
+          if (pill && dot && txt) {
+            pill.style.display = 'flex';
+            txt.textContent = CONFIG.status.text;
+            if (CONFIG.status.status === 'offline') dot.classList.add('offline');
+          }
         }
 
-        // Socials
-        var sc = document.getElementById('socialLinks');
-        CONFIG.socials.forEach(function (s) {
-          var a = document.createElement('a');
-          a.href = s.url;
-          a.className = 'social-icon';
-          a.setAttribute('aria-label', s.label);
-          a.setAttribute('target', '_blank');
-          a.setAttribute('rel', 'noopener noreferrer');
-          a.innerHTML = s.svg;
-          sc.appendChild(a);
-        });
-      }
-
-      /* ---------- Resolve icon to HTML string ---------- */
-      function iconHTML(icon) {
-        if (ICONS[icon]) return ICONS[icon];
-        // Treat as emoji / text
-        return '<span aria-hidden="true">' + icon + '</span>';
-      }
-
-      /* ---------- Build a link card ---------- */
-      function createLinkCard(linkData, isFeatured) {
-        var card = document.createElement('a');
-        card.href      = linkData.url;
-        card.className = 'link-card animate-in' + (isFeatured ? ' link-card--featured' : '');
-        card.setAttribute('target', '_blank');
-        card.setAttribute('rel', 'noopener noreferrer');
-        card.style.animationDelay = (linkData.delay || 0) + 's';
-
-        var copyBtnHTML = '';
-        if (linkData.copyable) {
-          copyBtnHTML = '<button type="button" class="copy-btn" ' +
-            'title="' + linkData.copyable.label + '" ' +
-            'aria-label="' + linkData.copyable.label + '">' +
-            ICONS.copy + '</button>';
-        }
-
-        card.innerHTML =
-          '<span class="link-icon" aria-hidden="true">' + iconHTML(linkData.icon) + '</span>' +
-          '<span class="link-text">' +
-            '<span class="link-title">'  + escapeHTML(linkData.title)       + '</span>' +
-            '<span class="link-desc">'   + escapeHTML(linkData.description) + '</span>' +
-          '</span>' +
-          copyBtnHTML +
-          '<span class="link-arrow" aria-hidden="true">' + ICONS.arrow + '</span>';
-
-        // Copy button logic
-        if (linkData.copyable) {
-          var btn = card.querySelector('.copy-btn');
-          btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            copyToClipboard(linkData.copyable.value, btn);
+        // Social icons
+        var nav = document.getElementById('socialLinks');
+        if (nav) {
+          CONFIG.socials.forEach(function (s) {
+            var a = document.createElement('a');
+            a.href = s.url; a.className = 'social-icon';
+            a.setAttribute('aria-label', s.label + ' profile');
+            a.setAttribute('rel', 'noopener noreferrer');
+            a.setAttribute('target', '_blank');
+            a.innerHTML = s.svg;
+            nav.appendChild(a);
           });
         }
+      }
 
-        // Middle-click or Ctrl/Cmd+click → copy URL
+      /* ================================================================
+       * LINK CARDS
+       * ================================================================ */
+      function createLinkCard(linkData, featured) {
+        var card = document.createElement('a');
+        card.href = linkData.url;
+        card.className = 'link-card animate-in' + (featured ? ' link-card--featured' : '');
+        card.setAttribute('rel', 'noopener noreferrer');
+        card.setAttribute('target', '_blank');
+        card.style.animationDelay = (linkData.delay || 0) + 's';
+        card.setAttribute('aria-label', linkData.title + (linkData.description ? ' — ' + linkData.description : ''));
+
+        // Icon
+        var iconEl = document.createElement('div');
+        iconEl.className = 'link-icon';
+        iconEl.setAttribute('aria-hidden', 'true');
+        if (linkData.icon === 'gh') {
+          iconEl.innerHTML = ICONS.github;
+        } else if (linkData.icon === 'x') {
+          iconEl.innerHTML = ICONS.x;
+        } else {
+          iconEl.textContent = linkData.icon || '🔗';
+        }
+        card.appendChild(iconEl);
+
+        // Text
+        var textEl = document.createElement('div');
+        textEl.className = 'link-text';
+        var titleEl = document.createElement('span');
+        titleEl.className = 'link-title'; titleEl.textContent = linkData.title;
+        var descEl = document.createElement('span');
+        descEl.className = 'link-desc'; descEl.textContent = linkData.description || '';
+        textEl.appendChild(titleEl); textEl.appendChild(descEl);
+        card.appendChild(textEl);
+
+        // Badge
+        if (linkData.badge) {
+          var badgeEl = document.createElement('span');
+          badgeEl.className = 'link-badge';
+          badgeEl.textContent = linkData.badge;
+          card.appendChild(badgeEl);
+        }
+
+        // Copy button
+        if (linkData.copyable) {
+          var btn = document.createElement('button');
+          btn.type = 'button'; btn.className = 'copy-btn';
+          btn.setAttribute('aria-label', linkData.copyable.label || 'Copy');
+          btn.innerHTML = ICONS.copy;
+          btn.addEventListener('click', function (e) {
+            e.preventDefault(); e.stopPropagation();
+            copyToClipboard(linkData.copyable.value, btn);
+          });
+          card.appendChild(btn);
+        }
+
+        // Arrow
+        var arrowEl = document.createElement('span');
+        arrowEl.className = 'link-arrow'; arrowEl.setAttribute('aria-hidden', 'true');
+        arrowEl.innerHTML = ICONS.arrow;
+        card.appendChild(arrowEl);
+
+        // Middle-click copies URL
         card.addEventListener('mousedown', function (e) {
-          if (e.button === 1) {
-            e.preventDefault();
-            copyToClipboard(linkData.url);
-          }
+          if (e.button === 1) { e.preventDefault(); copyToClipboard(linkData.url); }
         });
 
         return card;
       }
 
-      /* ---------- Build links section ---------- */
       function initLinks() {
         var container = document.getElementById('linksContainer');
-
         function addLabel(text, mt) {
           var p = document.createElement('p');
-          p.className = 'section-label';
-          p.textContent = text;
+          p.className = 'section-label'; p.textContent = text;
           if (mt) p.style.marginTop = 'var(--space-2)';
           container.appendChild(p);
         }
-
-        if (CONFIG.featuredLinks.length) {
+        if (CONFIG.featuredLinks && CONFIG.featuredLinks.length) {
           addLabel('Featured', false);
-          CONFIG.featuredLinks.forEach(function (l) {
-            container.appendChild(createLinkCard(l, true));
-          });
+          CONFIG.featuredLinks.forEach(function (l) { container.appendChild(createLinkCard(l, true)); });
         }
-        if (CONFIG.links.length) {
-          addLabel('Links', CONFIG.featuredLinks.length > 0);
-          CONFIG.links.forEach(function (l) {
-            container.appendChild(createLinkCard(l, false));
-          });
+        if (CONFIG.links && CONFIG.links.length) {
+          addLabel('Links', CONFIG.featuredLinks && CONFIG.featuredLinks.length > 0);
+          CONFIG.links.forEach(function (l) { container.appendChild(createLinkCard(l, false)); });
         }
       }
 
-      /* ---------- Clipboard ---------- */
+      /* ================================================================
+       * CLIPBOARD
+       * ================================================================ */
       var _copyTimer = null;
       function copyToClipboard(text, btn) {
         var feedback = document.getElementById('copyFeedback');
-
         function onSuccess() {
           feedback.textContent = '\u2713 Copied!';
           feedback.classList.add('show');
           if (_copyTimer) clearTimeout(_copyTimer);
-          _copyTimer = setTimeout(function () {
-            feedback.classList.remove('show');
-          }, 2000);
-
-          // Visual feedback on copy button
+          _copyTimer = setTimeout(function () { feedback.classList.remove('show'); }, 2000);
           if (btn) {
-            btn.classList.add('copied');
-            btn.innerHTML = ICONS.check;
-            setTimeout(function () {
-              btn.classList.remove('copied');
-              btn.innerHTML = ICONS.copy;
-            }, 2000);
+            btn.classList.add('copied'); btn.innerHTML = ICONS.check;
+            setTimeout(function () { btn.classList.remove('copied'); btn.innerHTML = ICONS.copy; }, 2000);
           }
         }
-
         function fallback() {
           var ta = document.createElement('textarea');
-          ta.value = text;
-          ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
-          document.body.appendChild(ta);
-          ta.focus();
-          ta.select();
+          ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+          document.body.appendChild(ta); ta.focus(); ta.select();
           try { document.execCommand('copy'); } catch (_) {}
-          document.body.removeChild(ta);
-          onSuccess();
+          document.body.removeChild(ta); onSuccess();
         }
-
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(onSuccess, fallback);
-        } else {
-          fallback();
-        }
+        } else { fallback(); }
       }
 
-      /* ---------- Helpers ---------- */
-      function escapeHTML(str) {
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      }
-
-      /* ---------- Boot ---------- */
-      // initTheme runs immediately (avoids flash)
+      /* ================================================================
+       * BOOT
+       * ================================================================ */
       initTheme();
 
       document.addEventListener('DOMContentLoaded', function () {
         renderAvatar();
         initProfile();
         initLinks();
+        initAgeGate();
       });
 
     }());
   </script>
+
+  <!-- Cloudflare Web Analytics — replace token once created in dashboard -->
+  <!-- https://dash.cloudflare.com → Analytics → Web Analytics → Add site -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token":"REPLACE_WITH_YOUR_CF_ANALYTICS_TOKEN"}'></script>
+
 </body>
 </html>

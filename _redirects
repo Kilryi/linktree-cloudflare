@@ -1,0 +1,9 @@
+# Social short links — add more as needed
+/gh     https://github.com/vulkyri       302
+/x      https://twitter.com/vulkyri      302
+/li     https://linkedin.com/in/vulkyri  302
+/ig     https://instagram.com/vulkyri    302
+/home   https://vulkyri.com/             302
+
+# Fallback — keep SPA routing intact
+/*      /index.html                      200
