@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "vulkyri",
+  "name": "linktree-cloudflare",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
