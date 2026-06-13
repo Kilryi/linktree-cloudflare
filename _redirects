@@ -1,12 +1,6 @@
 # Social short links
-/gh     https://github.com/vulkyri       302
-/x      https://twitter.com/vulkyri      302
-/li     https://linkedin.com/in/vulkyri  302
-/ig     https://instagram.com/vulkyri    302
-/home   /                                302
-
-# SPA fallback — must not match HTML files or it creates an infinite loop
-/go/*   /index.html                      200
-/qr     /index.html                      200
-/updates /index.html                     200
-/links   /index.html                     200
+/gh     /go/github       302
+/x      /go/x            302
+/li     /go/linkedin     302
+/ig     /go/instagram    302
+/home   /                302
