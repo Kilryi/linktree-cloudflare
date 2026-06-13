@@ -1,6 +1,16 @@
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
-.env*
-!.env.example
+# Dependencies
+node_modules/
+
+# Wrangler temp files
+.wrangler/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.local
+
+# Git internals — never upload these to Cloudflare Pages
+.git/
