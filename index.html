@@ -76,6 +76,14 @@
       --color-primary-light:   #1a2d4d;
       --meta-theme:            #0f0f0e;
     }
+    /* ── COLOR THEMES (applied via JS) ── */
+    [data-color-theme="cyberpunk"]  { --color-primary: #ff00ff; --color-primary-light: #2d0033; }
+    [data-color-theme="cyberpunk"][data-theme="light"] { --color-primary: #cc00cc; --color-primary-light: #ffe0ff; }
+    [data-color-theme="minimal"]    { --color-primary: #444444; --color-primary-light: #f0f0f0; }
+    [data-color-theme="minimal"][data-theme="light"] { --color-primary: #111111; --color-primary-light: #eeeeee; }
+    [data-color-theme="sunset"]     { --color-primary: #ff6b35; --color-primary-light: #2d1400; }
+    [data-color-theme="sunset"][data-theme="light"]  { --color-primary: #d94f1a; --color-primary-light: #fff0eb; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
     body {
@@ -91,24 +99,37 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
+    /* ── SKIP LINK ── */
     .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
     .skip-link:focus {
       left: var(--space-4); top: var(--space-4); width: auto; height: auto;
       padding: var(--space-2) var(--space-3); background: #000; color: #fff;
       z-index: 1000; border-radius: var(--radius-sm); font-size: var(--text-sm);
     }
-    .theme-toggle {
+    /* ── HEADER CONTROLS ── */
+    .header-controls {
       position: fixed; top: var(--space-4); right: var(--space-4);
-      width: 40px; height: 40px; border-radius: var(--radius-lg);
+      display: flex; gap: var(--space-2); align-items: center; z-index: 100;
+    }
+    .theme-toggle, .color-theme-select {
+      height: 40px; border-radius: var(--radius-lg);
       background: var(--color-surface);
       border: 1px solid color-mix(in oklch, var(--color-text) 10%, transparent);
       display: flex; align-items: center; justify-content: center;
-      color: var(--color-text-muted); transition: all var(--transition);
-      cursor: pointer; z-index: 100;
+      color: var(--color-text-muted); transition: all var(--transition); cursor: pointer;
     }
-    .theme-toggle:hover { color: var(--color-text); background: var(--color-surface-2); box-shadow: var(--shadow-md); }
+    .theme-toggle { width: 40px; }
+    .color-theme-select {
+      padding: 0 var(--space-3); font-size: var(--text-xs); font-weight: 600;
+      appearance: none; -webkit-appearance: none; outline: none;
+    }
+    .theme-toggle:hover, .color-theme-select:hover {
+      color: var(--color-text); background: var(--color-surface-2); box-shadow: var(--shadow-md);
+    }
     .theme-toggle:active { transform: scale(0.95); }
+    /* ── PAGE LAYOUT ── */
     .page { width: 100%; max-width: 520px; display: flex; flex-direction: column; align-items: center; gap: var(--space-6); }
+    /* ── PROFILE ── */
     .profile { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding-top: var(--space-8); text-align: center; }
     .status-pill {
       display: flex; align-items: center; gap: var(--space-2);
@@ -147,12 +168,27 @@
     .social-icon:hover { color: var(--color-text); background: var(--color-surface); border-color: color-mix(in oklch, var(--color-text) 20%, transparent); transform: translateY(-2px); }
     .social-icon svg { width: 16px; height: 16px; }
     .divider { width: 100%; height: 1px; background: color-mix(in oklch, var(--color-text) 8%, transparent); }
+    /* ── SEARCH ── */
+    .search-container { width: 100%; }
+    .search-input {
+      width: 100%; padding: var(--space-3) var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid color-mix(in oklch, var(--color-text) 8%, transparent);
+      border-radius: var(--radius-lg); font-size: var(--text-sm); color: var(--color-text);
+      transition: all var(--transition);
+    }
+    .search-input:focus {
+      outline: none; border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary) 15%, transparent);
+    }
+    /* ── SECTION LABEL ── */
     .section-label {
       width: 100%; font-size: var(--text-xs); font-weight: 600;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--color-text-faint); padding-left: var(--space-1);
       margin-bottom: calc(-1 * var(--space-2));
     }
+    /* ── LINKS ── */
     .links { width: 100%; display: flex; flex-direction: column; gap: var(--space-3); }
     .link-card {
       position: relative; display: flex; align-items: center; gap: var(--space-4);
@@ -160,7 +196,7 @@
       background: var(--color-surface);
       border: 1px solid color-mix(in oklch, var(--color-text) 8%, transparent);
       border-radius: var(--radius-lg); transition: all var(--transition);
-      overflow: hidden; text-decoration: none;
+      overflow: hidden; text-decoration: none; color: inherit;
     }
     .link-card::before {
       content: ''; position: absolute; inset: 0; opacity: 0;
@@ -209,7 +245,12 @@
     .copy-btn:active { transform: scale(0.9); }
     .copy-btn svg { width: 14px; height: 14px; }
     .copy-btn.copied { color: #22c55e; border-color: #22c55e; }
-    /* ── COUNTDOWN CARD ── */
+    /* ── QR CODE ── */
+    .qr-section { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); opacity: 0.6; transition: opacity var(--transition); }
+    .qr-section:hover { opacity: 1; }
+    .qr-section img { width: 100px; height: 100px; border-radius: var(--radius-sm); }
+    .qr-label { font-size: var(--text-xs); color: var(--color-text-faint); }
+    /* ── COUNTDOWN ── */
     .countdown-card {
       width: 100%; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
       padding: var(--space-4) var(--space-5);
@@ -223,7 +264,7 @@
     .countdown-unit { display: flex; flex-direction: column; align-items: center; gap: 2px; }
     .countdown-num { font-size: 1.5rem; font-weight: 700; color: var(--color-primary); line-height: 1; font-variant-numeric: tabular-nums; }
     .countdown-sub { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-faint); }
-    /* ── UPDATES CARD ── */
+    /* ── UPDATES ── */
     .updates-card {
       width: 100%; display: flex; flex-direction: column; gap: var(--space-3);
       padding: var(--space-4) var(--space-5);
@@ -235,7 +276,7 @@
     .updates-title-row { display: flex; align-items: center; gap: var(--space-2); }
     .updates-icon { font-size: 1rem; }
     .updates-heading { font-size: var(--text-sm); font-weight: 700; color: var(--color-text); }
-    .updates-see-all { font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; text-decoration: none; }
+    .updates-see-all { font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; }
     .updates-see-all:hover { text-decoration: underline; }
     .update-item { display: flex; flex-direction: column; gap: 2px; }
     .update-item + .update-item { padding-top: var(--space-3); border-top: 1px solid color-mix(in oklch, var(--color-text) 6%, transparent); }
@@ -244,7 +285,7 @@
     /* ── FOOTER ── */
     .footer { margin-top: var(--space-4); padding-bottom: var(--space-6); font-size: var(--text-xs); color: var(--color-text-faint); text-align: center; }
     .footer-links { display: flex; gap: var(--space-4); justify-content: center; margin-top: var(--space-2); }
-    .footer-links a { font-size: var(--text-xs); color: var(--color-text-faint); text-decoration: none; transition: color var(--transition); }
+    .footer-links a { font-size: var(--text-xs); color: var(--color-text-faint); transition: color var(--transition); }
     .footer-links a:hover { color: var(--color-primary); }
     /* ── TOAST ── */
     .copy-feedback {
@@ -261,7 +302,7 @@
     .animate-in { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
     @media (max-width: 480px) {
       body { padding: var(--space-3); }
-      .theme-toggle { top: var(--space-3); right: var(--space-3); }
+      .header-controls { top: var(--space-3); right: var(--space-3); }
       .link-card { padding: var(--space-3) var(--space-4); gap: var(--space-3); }
     }
   </style>
@@ -269,18 +310,28 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <button class="theme-toggle" id="themeToggle" type="button"
-          aria-label="Switch to light mode" aria-pressed="true">
-    <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-    <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
-      <circle cx="12" cy="12" r="5"/>
-      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-    </svg>
-  </button>
+  <div class="header-controls">
+    <!-- Color theme selector -->
+    <select id="colorThemeSelect" class="color-theme-select" aria-label="Colour theme">
+      <option value="original">Original</option>
+      <option value="cyberpunk">Cyberpunk</option>
+      <option value="minimal">Minimal</option>
+      <option value="sunset">Sunset</option>
+    </select>
+    <!-- Dark / light toggle -->
+    <button class="theme-toggle" id="themeToggle" type="button"
+            aria-label="Switch to light mode" aria-pressed="true">
+      <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+    </button>
+  </div>
 
-  <div class="copy-feedback" id="copyFeedback" role="status" aria-live="polite" aria-atomic="true">Copied!</div>
+  <div class="copy-feedback" id="copyFeedback" role="status" aria-live="polite" aria-atomic="true">&#10003; Copied!</div>
 
   <main class="page" id="main" role="main">
     <section class="profile animate-in" aria-label="Profile" style="animation-delay:0s">
@@ -301,10 +352,17 @@
 
     <div class="divider" role="separator" aria-hidden="true"></div>
 
+    <!-- Search -->
+    <div class="search-container" id="searchContainer" style="display:none;">
+      <input type="search" id="searchInput" class="search-input"
+             placeholder="Search links…" aria-label="Search links" autocomplete="off" />
+    </div>
+
     <nav class="links" id="linksContainer" aria-label="Links"></nav>
 
     <footer class="footer" role="contentinfo">
       <p id="footerText"></p>
+      <div id="qrSection"></div>
       <nav class="footer-links" aria-label="Footer links">
         <a href="/updates">Updates</a>
         <a href="/qr">QR Code</a>
@@ -345,107 +403,64 @@
       },
       status: { status: 'online', text: 'Open to opportunities' },
       countdown: null,
-      /* countdown example (uncomment + set date to enable):
-      countdown: {
-        label:  'New drop',
-        title:  'Something is coming',
-        target: '2026-07-01T00:00:00Z'
-      },
+      /* countdown example:
+      countdown: { label: 'New drop', title: 'Something is coming', target: '2026-08-01T00:00:00Z' },
       */
       updates: [
         { date: 'Jun 2026', text: 'New projects dropping soon — watch this space.' }
       ],
       socials: [
-        {
-          label: 'X / Twitter',
-          url:   'https://vulkyri.com/go/x',
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
-        },
-        {
-          label: 'GitHub',
-          url:   'https://vulkyri.com/go/github',
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>'
-        },
-        {
-          label: 'LinkedIn',
-          url:   'https://vulkyri.com/go/linkedin',
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
-        },
-        {
-          label: 'Instagram',
-          url:   'https://vulkyri.com/go/instagram',
-          svg:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>'
-        }
+        { label: 'X / Twitter', url: 'https://vulkyri.com/go/x',
+          svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' },
+        { label: 'GitHub', url: 'https://vulkyri.com/go/github',
+          svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>' },
+        { label: 'LinkedIn', url: 'https://vulkyri.com/go/linkedin',
+          svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>' },
+        { label: 'Instagram', url: 'https://vulkyri.com/go/instagram',
+          svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>' }
       ],
       featuredLinks: [
         {
-          title:       'Book / Enquire',
-          description: 'Send a private, discreet enquiry',
-          icon:        '📩',
-          url:         'mailto:hello@vulkyri.com',
-          badge:       'Bookings open',
-          delay:       0.05
-          /* To schedule: add startAt / endAt as ISO strings
-             startAt: '2026-07-01T00:00:00Z',
-             endAt:   '2026-07-31T23:59:59Z' */
+          title: 'Book / Enquire', description: 'Send a private, discreet enquiry',
+          icon: '📩', url: 'mailto:hello@vulkyri.com', badge: 'Bookings open', delay: 0.05
         }
       ],
       links: [
-        {
-          title:       'GitHub',
-          description: 'Projects, repos & open source',
-          icon:        'gh',
-          url:         'https://vulkyri.com/go/github',
-          delay:       0.1,
-          copyable:    { value: 'vulkyri', label: 'Copy username' }
-        },
-        {
-          title:       'X / Twitter',
-          description: 'Thoughts & updates',
-          icon:        'x',
-          url:         'https://vulkyri.com/go/x',
-          delay:       0.15
-        },
-        {
-          title:       'LinkedIn',
-          description: 'Professional profile',
-          icon:        '💼',
-          url:         'https://vulkyri.com/go/linkedin',
-          delay:       0.2
-        },
-        {
-          title:       'Instagram',
-          description: 'Photos & life updates',
-          icon:        '📸',
-          url:         'https://vulkyri.com/go/instagram',
-          delay:       0.25
-        }
-      ]
+        { title: 'GitHub',    description: 'Projects, repos & open source', icon: 'gh', url: 'https://vulkyri.com/go/github',    delay: 0.10, copyable: { value: 'vulkyri', label: 'Copy username' } },
+        { title: 'X / Twitter', description: 'Thoughts & updates',          icon: 'x',  url: 'https://vulkyri.com/go/x',        delay: 0.15, copyable: { value: '@vulkyri', label: 'Copy handle' } },
+        { title: 'LinkedIn',  description: 'Professional profile',           icon: '💼', url: 'https://vulkyri.com/go/linkedin',  delay: 0.20 },
+        { title: 'Instagram', description: 'Photos & life updates',          icon: '📸', url: 'https://vulkyri.com/go/instagram', delay: 0.25 }
+      ],
+      features: {
+        search:      true,
+        qrCode:      true,
+        trackClicks: true,
+        analytics:   false  /* Set to GA Measurement ID string to enable GA4, e.g. 'G-XXXXXXXXXX' */
+      }
     };
 
     var ICONS = {
-      copy:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
-      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
-      arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
-      github:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>',
-      x:     '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+      copy:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+      check:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+      arrow:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
+      github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>',
+      x:      '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
     };
 
-    /* ── SCHEDULING HELPER ── */
+    var _copyTimer = null;
+
+    /* ── SCHEDULING ── */
     function isScheduled(link) {
       var now = Date.now();
       if (link.startAt && new Date(link.startAt).getTime() > now) return false;
       if (link.endAt   && new Date(link.endAt).getTime()   < now) return false;
+      if (link.visibleFrom  && new Date(link.visibleFrom).getTime()  > now) return false;
+      if (link.visibleUntil && new Date(link.visibleUntil).getTime() < now) return false;
+      if (link.visible === false) return false;
       return true;
     }
 
-    /* ── THEME ── */
-    function initTheme() {
-      var saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (_) {}
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(saved || (prefersDark ? 'dark' : 'light'));
-    }
+    /* ── THEME (dark/light) ── */
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       var toggle = document.getElementById('themeToggle');
@@ -455,28 +470,45 @@
       if (!toggle) return;
       if (theme === 'dark') {
         moon.style.display = ''; sun.style.display = 'none';
-        toggle.setAttribute('aria-label', 'Switch to light mode');
+        toggle.setAttribute('aria-label',  'Switch to light mode');
         toggle.setAttribute('aria-pressed', 'true');
         if (meta) meta.setAttribute('content', '#0f0f0e');
       } else {
         moon.style.display = 'none'; sun.style.display = '';
-        toggle.setAttribute('aria-label', 'Switch to dark mode');
+        toggle.setAttribute('aria-label',  'Switch to dark mode');
         toggle.setAttribute('aria-pressed', 'false');
         if (meta) meta.setAttribute('content', '#f7f6f2');
       }
+      try { localStorage.setItem('theme', theme); } catch (_) {}
     }
-    document.addEventListener('DOMContentLoaded', function () {
+    function initTheme() {
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (_) {}
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(saved || (prefersDark ? 'dark' : 'light'));
       var toggle = document.getElementById('themeToggle');
-      if (toggle) {
-        toggle.addEventListener('click', function () {
-          var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-          applyTheme(next);
-          try { localStorage.setItem('theme', next); } catch (_) {}
-        });
-      }
-    });
+      if (toggle) toggle.addEventListener('click', function () {
+        applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      });
+    }
 
-    /* ── PROFILE ── */
+    /* ── COLOR THEME ── */
+    function applyColorTheme(name) {
+      document.documentElement.setAttribute('data-color-theme', name === 'original' ? '' : name);
+      try { localStorage.setItem('color-theme', name); } catch (_) {}
+    }
+    function initColorTheme() {
+      var saved = null;
+      try { saved = localStorage.getItem('color-theme'); } catch (_) {}
+      var sel = document.getElementById('colorThemeSelect');
+      if (!sel) return;
+      var theme = saved || 'original';
+      sel.value = theme;
+      applyColorTheme(theme);
+      sel.addEventListener('change', function (e) { applyColorTheme(e.target.value); });
+    }
+
+    /* ── AVATAR ── */
     function renderAvatar() {
       var el = document.getElementById('avatarEl');
       if (!el) return;
@@ -488,16 +520,15 @@
         el.textContent = ''; el.appendChild(img);
       } else { el.textContent = av; }
     }
+
+    /* ── PROFILE ── */
     function initProfile() {
       var p = CONFIG.profile;
-      var nameEl   = document.getElementById('profileName');
-      var handleEl = document.getElementById('profileHandle');
-      var bioEl    = document.getElementById('profileBio');
-      var footerEl = document.getElementById('footerText');
-      if (nameEl)   nameEl.textContent   = p.name;
-      if (handleEl) handleEl.textContent = p.handle;
-      if (bioEl)    bioEl.textContent    = p.bio;
-      if (footerEl) footerEl.textContent = '\u00A9 ' + p.year + ' ' + p.name + ' · vulkyri.com';
+      var el;
+      if ((el = document.getElementById('profileName')))   el.textContent = p.name;
+      if ((el = document.getElementById('profileHandle'))) el.textContent = p.handle;
+      if ((el = document.getElementById('profileBio')))    el.textContent = p.bio;
+      if ((el = document.getElementById('footerText')))    el.textContent = '\u00A9 ' + p.year + ' ' + p.name + ' \u00B7 vulkyri.com';
       if (CONFIG.status) {
         var pill = document.getElementById('statusPill');
         var dot  = document.getElementById('statusDot');
@@ -509,17 +540,28 @@
         }
       }
       var nav = document.getElementById('socialLinks');
-      if (nav) {
-        CONFIG.socials.forEach(function (s) {
-          var a = document.createElement('a');
-          a.href = s.url; a.className = 'social-icon';
-          a.setAttribute('aria-label', s.label + ' profile');
-          a.setAttribute('rel', 'noopener noreferrer');
-          a.setAttribute('target', '_blank');
-          a.innerHTML = s.svg;
-          nav.appendChild(a);
-        });
-      }
+      if (nav) CONFIG.socials.forEach(function (s) {
+        var a = document.createElement('a');
+        a.href = s.url; a.className = 'social-icon';
+        a.setAttribute('aria-label', s.label + ' profile');
+        a.setAttribute('rel', 'noopener noreferrer');
+        a.setAttribute('target', '_blank');
+        a.innerHTML = s.svg;
+        nav.appendChild(a);
+      });
+    }
+
+    /* ── SEARCH ── */
+    function initSearch(allLinks) {
+      if (!CONFIG.features.search || allLinks.length < 4) return;
+      var container = document.getElementById('searchContainer');
+      var input     = document.getElementById('searchInput');
+      if (!container || !input) return;
+      container.style.display = 'block';
+      input.addEventListener('input', function (e) {
+        var term = e.target.value.toLowerCase();
+        renderLinks(term);
+      });
     }
 
     /* ── COUNTDOWN ── */
@@ -531,24 +573,21 @@
       var container = document.getElementById('linksContainer');
       if (!container) return;
       var card = document.createElement('div');
-      card.className = 'countdown-card animate-in';
-      card.style.animationDelay = '0.02s';
+      card.className = 'countdown-card animate-in'; card.style.animationDelay = '0.02s';
       card.innerHTML =
         '<span class="countdown-label">' + (cd.label || 'Coming soon') + '</span>' +
-        '<span class="countdown-title">' + (cd.title || '') + '</span>' +
+        '<span class="countdown-title">'  + (cd.title || '')           + '</span>' +
         '<div class="countdown-digits" id="cdDigits"></div>';
       container.prepend(card);
       function tick() {
         var diff = Math.max(0, target - Date.now());
         var d = Math.floor(diff / 86400000);
         var h = Math.floor((diff % 86400000) / 3600000);
-        var m = Math.floor((diff % 3600000) / 60000);
-        var s = Math.floor((diff % 60000) / 1000);
+        var m = Math.floor((diff % 3600000)  / 60000);
+        var s = Math.floor((diff % 60000)    / 1000);
         var el = document.getElementById('cdDigits');
         if (!el) return;
-        el.innerHTML = [
-          [d,'Days'],[h,'Hrs'],[m,'Min'],[s,'Sec']
-        ].map(function(u) {
+        el.innerHTML = [[d,'Days'],[h,'Hrs'],[m,'Min'],[s,'Sec']].map(function(u) {
           return '<div class="countdown-unit"><span class="countdown-num">' +
             String(u[0]).padStart(2,'0') +
             '</span><span class="countdown-sub">' + u[1] + '</span></div>';
@@ -558,16 +597,15 @@
       tick();
     }
 
-    /* ── UPDATES WIDGET ── */
+    /* ── UPDATES ── */
     function renderUpdates() {
       if (!CONFIG.updates || !CONFIG.updates.length) return;
       var container = document.getElementById('linksContainer');
       if (!container) return;
       var card = document.createElement('div');
-      card.className = 'updates-card animate-in';
-      card.style.animationDelay = '0.3s';
+      card.className = 'updates-card animate-in'; card.style.animationDelay = '0.3s';
       var header = '<div class="updates-header">' +
-        '<div class="updates-title-row"><span class="updates-icon">📣</span>' +
+        '<div class="updates-title-row"><span class="updates-icon">\uD83D\uDCE3</span>' +
         '<span class="updates-heading">Updates</span></div>' +
         '<a class="updates-see-all" href="/updates">See all</a></div>';
       var items = CONFIG.updates.slice(0,3).map(function(u) {
@@ -579,6 +617,32 @@
       container.appendChild(card);
     }
 
+    /* ── QR CODE ── */
+    function renderQR() {
+      if (!CONFIG.features.qrCode) return;
+      var el = document.getElementById('qrSection');
+      if (!el) return;
+      var url = encodeURIComponent(window.location.origin + '/');
+      el.className = 'qr-section';
+      el.innerHTML =
+        '<img src="https://qrserver.com/api/render-qr-code/?size=100x100&data=' + url + '"' +
+        ' alt="QR code for this page" width="100" height="100" loading="lazy" />' +
+        '<span class="qr-label">Scan to share</span>';
+    }
+
+    /* ── CLICK TRACKING ── */
+    function trackClick(title) {
+      if (!CONFIG.features.trackClicks) return;
+      try {
+        var clicks = JSON.parse(localStorage.getItem('link-clicks') || '{}');
+        clicks[title] = (clicks[title] || 0) + 1;
+        localStorage.setItem('link-clicks', JSON.stringify(clicks));
+      } catch (_) {}
+      if (CONFIG.features.analytics && window.gtag) {
+        window.gtag('event', 'link_click', { link_title: title });
+      }
+    }
+
     /* ── LINK CARDS ── */
     function createLinkCard(linkData, featured) {
       var card = document.createElement('a');
@@ -587,17 +651,21 @@
       card.setAttribute('rel', 'noopener noreferrer');
       card.setAttribute('target', '_blank');
       card.style.animationDelay = (linkData.delay || 0) + 's';
-      card.setAttribute('aria-label', linkData.title + (linkData.description ? ' — ' + linkData.description : ''));
+      card.setAttribute('aria-label', linkData.title + (linkData.description ? ' \u2014 ' + linkData.description : ''));
+      card.addEventListener('click', function () { trackClick(linkData.title); });
+
       var iconEl = document.createElement('div');
       iconEl.className = 'link-icon'; iconEl.setAttribute('aria-hidden', 'true');
-      if (linkData.icon === 'gh')      iconEl.innerHTML  = ICONS.github;
-      else if (linkData.icon === 'x') iconEl.innerHTML  = ICONS.x;
-      else                             iconEl.textContent = linkData.icon || '🔗';
+      if      (linkData.icon === 'gh') iconEl.innerHTML  = ICONS.github;
+      else if (linkData.icon === 'x')  iconEl.innerHTML  = ICONS.x;
+      else                              iconEl.textContent = linkData.icon || '\uD83D\uDD17';
       card.appendChild(iconEl);
+
       var textEl  = document.createElement('div'); textEl.className = 'link-text';
       var titleEl = document.createElement('span'); titleEl.className = 'link-title'; titleEl.textContent = linkData.title;
       var descEl  = document.createElement('span'); descEl.className  = 'link-desc';  descEl.textContent  = linkData.description || '';
       textEl.appendChild(titleEl); textEl.appendChild(descEl); card.appendChild(textEl);
+
       if (linkData.badge) {
         var badgeEl = document.createElement('span');
         badgeEl.className = 'link-badge'; badgeEl.textContent = linkData.badge;
@@ -623,66 +691,84 @@
       return card;
     }
 
-    function initLinks() {
+    /* ── RENDER LINKS (supports search filtering) ── */
+    function renderLinks(searchTerm) {
       var container = document.getElementById('linksContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      var term     = (searchTerm || '').toLowerCase();
+      var featured = (CONFIG.featuredLinks || []).filter(isScheduled);
+      var links    = (CONFIG.links         || []).filter(isScheduled);
+
+      if (term) {
+        featured = featured.filter(function(l) { return (l.title + ' ' + (l.description || '')).toLowerCase().includes(term); });
+        links    = links.filter(function(l)    { return (l.title + ' ' + (l.description || '')).toLowerCase().includes(term); });
+      }
+
       function addLabel(text, mt) {
-        var p = document.createElement('p');
-        p.className = 'section-label'; p.textContent = text;
+        var p = document.createElement('p'); p.className = 'section-label'; p.textContent = text;
         if (mt) p.style.marginTop = 'var(--space-2)';
         container.appendChild(p);
       }
-      var featured = (CONFIG.featuredLinks || []).filter(isScheduled);
-      var links    = (CONFIG.links || []).filter(isScheduled);
       if (featured.length) {
         addLabel('Featured', false);
-        featured.forEach(function (l) { container.appendChild(createLinkCard(l, true)); });
+        featured.forEach(function(l) { container.appendChild(createLinkCard(l, true)); });
       }
       if (links.length) {
         addLabel('Links', featured.length > 0);
-        links.forEach(function (l) { container.appendChild(createLinkCard(l, false)); });
+        links.forEach(function(l) { container.appendChild(createLinkCard(l, false)); });
+      }
+      if (!featured.length && !links.length && term) {
+        var msg = document.createElement('p');
+        msg.style.cssText = 'text-align:center;color:var(--color-text-muted);margin-top:var(--space-4)';
+        msg.textContent = 'No links found for \"' + searchTerm + '\"';
+        container.appendChild(msg);
       }
     }
 
     /* ── CLIPBOARD ── */
-    var _copyTimer = null;
     function copyToClipboard(text, btn) {
-      var feedback = document.getElementById('copyFeedback');
       function onSuccess() {
-        feedback.textContent = '\u2713 Copied!';
-        feedback.classList.add('show');
-        if (_copyTimer) clearTimeout(_copyTimer);
-        _copyTimer = setTimeout(function () { feedback.classList.remove('show'); }, 2000);
-        if (btn) {
-          btn.classList.add('copied'); btn.innerHTML = ICONS.check;
-          setTimeout(function () { btn.classList.remove('copied'); btn.innerHTML = ICONS.copy; }, 2000);
-        }
+        var fb = document.getElementById('copyFeedback');
+        if (fb) { fb.classList.add('show'); if (_copyTimer) clearTimeout(_copyTimer); _copyTimer = setTimeout(function() { fb.classList.remove('show'); }, 2000); }
+        if (btn) { btn.classList.add('copied'); btn.innerHTML = ICONS.check; setTimeout(function() { btn.classList.remove('copied'); btn.innerHTML = ICONS.copy; }, 2000); }
       }
       function fallback() {
-        var ta = document.createElement('textarea');
-        ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+        var ta = document.createElement('textarea'); ta.value = text;
+        ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
         document.body.appendChild(ta); ta.focus(); ta.select();
         try { document.execCommand('copy'); } catch (_) {}
         document.body.removeChild(ta); onSuccess();
       }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(onSuccess, fallback);
-      } else { fallback(); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(onSuccess, fallback);
+      else fallback();
     }
 
-    /* ── KV CONFIG BOOTSTRAP ──
-       If /api/config is available (KV set up), merge remote config over defaults.
-       Falls back silently to the hardcoded CONFIG above if KV isn't ready yet. */
+    /* ── GA4 (optional) ── */
+    function initAnalytics() {
+      if (!CONFIG.features.analytics) return;
+      var id = CONFIG.features.analytics;
+      var s = document.createElement('script'); s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function() { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date()); window.gtag('config', id);
+    }
+
+    /* ── KV REMOTE CONFIG ── */
     function loadRemoteConfig(cb) {
       fetch('/api/config', { cache: 'no-store' })
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(remote) {
           if (remote) {
             if (remote.profile)       Object.assign(CONFIG.profile, remote.profile);
-            if (remote.status)        CONFIG.status = remote.status;
-            if (remote.countdown)     CONFIG.countdown = remote.countdown;
-            if (remote.updates)       CONFIG.updates = remote.updates;
+            if (remote.status !== undefined) CONFIG.status = remote.status;
+            if (remote.countdown)     CONFIG.countdown     = remote.countdown;
+            if (remote.updates)       CONFIG.updates       = remote.updates;
             if (remote.featuredLinks) CONFIG.featuredLinks = remote.featuredLinks;
-            if (remote.links)         CONFIG.links = remote.links;
+            if (remote.links)         CONFIG.links         = remote.links;
           }
           cb();
         })
@@ -691,13 +777,18 @@
 
     /* ── BOOT ── */
     initTheme();
+    initColorTheme();
+    initAnalytics();
     document.addEventListener('DOMContentLoaded', function () {
       loadRemoteConfig(function () {
         renderAvatar();
         initProfile();
         renderCountdown();
-        initLinks();
+        renderLinks();
         renderUpdates();
+        renderQR();
+        var allLinks = (CONFIG.featuredLinks || []).concat(CONFIG.links || []);
+        initSearch(allLinks);
       });
     });
 
