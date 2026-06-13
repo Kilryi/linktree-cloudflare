@@ -1,0 +1,14 @@
+# Cloudflare Pages asset ignore — same syntax as .gitignore
+# Prevents these from being uploaded as public static files
+
+.git
+.git/**
+.wrangler
+.wrangler/**
+.github
+.github/**
+node_modules
+node_modules/**
+README.md
+LICENSE
+wrangler.jsonc
