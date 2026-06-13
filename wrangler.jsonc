@@ -14,15 +14,16 @@
   // Workers AI binding — exposes env.AI in all Pages Functions
   "ai": {
     "binding": "AI"
-  },
+  }
 
-  // KV namespace — store config, click counts, status updates
-  // Create with: npx wrangler kv namespace create VULKYRI_KV
-  // Then replace the placeholder id below with the returned id
-  "kv_namespaces": [
-    {
-      "binding": "VULKYRI_KV",
-      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-    }
-  ]
+  // KV namespace — optional. Uncomment and replace id once you have created
+  // a KV namespace in your Cloudflare account:
+  //   npx wrangler kv namespace create VULKYRI_KV
+  // Then paste the returned id below and re-enable this block.
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "VULKYRI_KV",
+  //     "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+  //   }
+  // ]
 }
