@@ -14,7 +14,7 @@
   // Workers AI binding — exposes env.AI in all Pages Functions
   "ai": {
     "binding": "AI"
-  }
+  },
 
   // KV namespace — optional. Uncomment once you have created one:
   //   npx wrangler kv namespace create VULKYRI_KV
