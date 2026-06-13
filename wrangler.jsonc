@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "vulkyri",
+  "name": "linktree-cloudflare",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
@@ -16,14 +16,9 @@
     "binding": "AI"
   }
 
-  // KV namespace — optional. Uncomment and replace id once you have created
-  // a KV namespace in your Cloudflare account:
+  // KV namespace — optional. Uncomment once you have created one:
   //   npx wrangler kv namespace create VULKYRI_KV
-  // Then paste the returned id below and re-enable this block.
   // "kv_namespaces": [
-  //   {
-  //     "binding": "VULKYRI_KV",
-  //     "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-  //   }
+  //   { "binding": "VULKYRI_KV", "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID" }
   // ]
 }
