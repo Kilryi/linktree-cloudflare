@@ -4,3 +4,6 @@
 /li     /go/linkedin     302
 /ig     /go/instagram    302
 /home   /                302
+
+# Fallback — serve index.html for all unmatched routes (client-side routing)
+/*      /index.html      200

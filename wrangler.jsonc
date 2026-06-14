@@ -1,14 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "linktree-cloudflare",
+  "name": "vulkyri",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
 
-  // Static assets — Cloudflare Pages serves index.html for unmatched routes
+  // Static assets — served directly by Cloudflare Pages
   "assets": {
-    "directory": ".",
-    "not_found_handling": "single-page-application"
+    "directory": "."
   },
 
   // Workers AI binding — exposes env.AI in all Pages Functions
